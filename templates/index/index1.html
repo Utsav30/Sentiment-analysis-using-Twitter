@@ -1,0 +1,381 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico">
+
+    <title>Sentiment Analysis</title>
+
+
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="shttps://getbootstrap.com/docs/4.1/examples/starter-template/starter-template.css" rel="stylesheet">
+
+      <!--chart-->
+      <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
+      <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+      <style>
+
+
+          .vertical-center {
+  min-height: 80%;  /* Fallback for vh unit */
+  min-height: 100vh; /* You might also want to use
+                        'height' property instead.
+
+                        Note that for percentage values of
+                        'height' or 'min-height' properties,
+                        the 'height' of the parent element
+                        should be specified explicitly.
+
+                        In this case the parent of '.vertical-center'
+                        is the <body> element */
+
+  /* Make it a flex container */
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  /* Align the bootstrap's container vertically
+    -webkit-box-align : center;
+  -webkit-align-items : center;
+       -moz-box-align : center;*/
+       -ms-flex-align : center;
+          align-items : center;
+
+  /* In legacy web browsers such as Firefox 9
+     we need to specify the width of the flex container */
+  width: 100%;
+
+  /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
+     hence the bootstrap's container won't be aligned to the center anymore.
+
+     Therefore, we should use the following declarations to get it centered again */
+         -webkit-box-pack : center;
+            -moz-box-pack : center;
+            -ms-flex-pack : center;
+  -webkit-justify-content : center;
+          justify-content : center;
+}
+          #container2 {
+	min-width: 640px;
+	max-width: 820px;
+	margin: 0 auto;
+}
+      </style>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand " float="left" href="#">Sentiment Analysis</a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <!--  <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+        -->
+        <form class="form-inline my-2 my-lg-0 float-right" style="text-align:right;" method="POST">{% csrf_token %}
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="text">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </li>
+        </ul>
+
+    </nav>
+
+    <main role="main" class="container">
+
+      <!--<div class="starter-template">
+        <h1>Bootstrap starter template</h1>
+        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+      </div>-->
+
+      <div class="container vertical-center text-center" >
+
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+               {% load static %}
+                <img src="{% static "sent.jpg" %}" >
+
+            </div>
+
+        </div>
+
+        </div>
+        {% ifnotequal topic null %}
+        <div class="container vertical-center text-center" >
+
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div id="container1" style="color: #313131"></div>
+
+            </div>
+
+        </div>
+
+        </div>
+
+        <div class="container vertical-center text-center" >
+
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div id="container2" style="color: #313131"></div>
+
+                <button id="plain">Plain</button>
+                <button id="inverted">Inverted</button>
+                <button id="polar">Polar</button>
+
+
+            </div>
+
+        </div>
+        </div>
+        {% endifnotequal %}
+
+
+
+    </main>
+    </main><!-- /.container -->
+{% ifnotequal topic null %}
+    <div class="container">
+        <!--<h1>Positive:</h1>
+        <p>{{ pt0}}</p>
+        <p>{{ pt1 }}</p>
+        <p>{{ pt2 }}</p>
+        <p>{{ pt3 }}</p>
+        <p>{{ pt4 }}</p>
+        <h1>negative:</h1>
+        <p>{{ nt0 }}</p>
+        <p>{{ nt1 }}</p>
+        <p>{{ nt2 }}</p>
+        <p>{{ nt3 }}</p>
+        <p>{{ nt4 }}</p>
+    -->
+        <h1>Positive:</h1>
+        {% for link in pt0 %}
+            <li>{{ link }}</li>
+        {% endfor %}
+        <h1>Negative:</h1>
+        {% for link in nt0 %}
+            <li>{{ link }}</li>
+        {% endfor %}
+
+    </div>
+{% endifnotequal %}
+
+
+    <script  type="text/javascript">
+
+
+// Build the chart
+Highcharts.chart('container1', {
+    chart: {
+        plotBackgroundColor: '#313131',
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: '{{ topic }}'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+            showInLegend: true
+        }
+    },
+    series: [{
+        name: 'Sentiment',
+        colorByPoint: true,
+        data: [{
+            name: 'Neutral: {{ nu }}%',
+            y: {{ nu }},
+            sliced: true,
+            selected: true
+        },  {
+            name: 'Positive: {{ pos }}%',
+            y: {{ pos }},
+            color:'rgb(144, 237, 125)'
+        },{
+            name: 'Negative: {{ neg }}%',
+            y: {{ neg }},
+            color:'rgb(241, 92, 128)'
+        }]
+    }]
+});
+    </script>
+    <!-- Bootstrap core-->
+    <script>
+
+        var chart = Highcharts.chart('container2', {
+            colors:['rgb(238, 170, 238)','rgb(170, 238, 238)','rgb(43, 144, 143)','rgb(255, 0, 102)'],
+            chart: {
+                backgroundColor: '#313131'
+            },
+
+    title: {
+        text: '{{ topic }}',
+        style:{
+            color:'#ffffff'
+        },
+    },
+
+    subtitle: {
+        text: 'Plain',
+        style:{
+            color:'#ffffff'
+        },
+
+    },
+
+    xAxis: {
+        categories: ['Overall', 'Neutral', 'Positive', 'Negative'],
+
+         labels: {
+            style: {
+                color: '#ffffff'
+            }
+        },
+        title: {
+                    text:'Sentiment Level',
+            style: {
+                color: '#ffffff'
+            }
+        },
+
+    },
+            yAxis:{
+                labels: {
+            style: {
+                color: '#ffffff'
+            }
+        },
+                title: {
+                    text:'No of tweets',
+            style: {
+                color: '#ffffff'
+            }
+        },
+            },
+
+    series: [{
+        type: 'column',
+        colorByPoint: true,
+        data: [{{ tt }}, {{ nnt }}, {{ pt }}, {{ nt }}],
+        showInLegend: false,
+
+
+    }]
+
+});
+
+
+$('#plain').click(function () {
+    chart.update({
+        chart: {
+            inverted: false,
+            polar: false
+        },
+        subtitle: {
+            text: 'Plain'
+        }
+    });
+});
+
+$('#inverted').click(function () {
+    chart.update({
+        chart: {
+            inverted: true,
+            polar: false
+        },
+        subtitle: {
+            text: 'Inverted'
+        }
+    });
+});
+
+$('#polar').click(function () {
+    chart.update({
+        chart: {
+            inverted: false,
+            polar: true
+        },
+        subtitle: {
+            text: 'Polar'
+        }
+    });
+});
+
+        </script>
+    <!--
+
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+    <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
